@@ -2,142 +2,161 @@ let menuI = 0;
 let botaoJogar;
 let botaoInfo;
 
-
-let vX = 5;
-let posX = 0;
-let vY = 5;
-let posY = 0;
+let jogo = false;
 
 let estado_keyUp = false;
 let estado_keyDown = false;
 let estado_keyLeft = false;
 let estado_keyRight = false;
 
+let seringa;
+
+let dirSeringa = true;
+
+let pxS;
+let pyS;
 
 
-function preload(){
+function preload() {
 
-
+    carregaMedia();
+    player = new Player(windowWidth / 2, windowHeight - 20);
 
 
 }
 
-function setup(){
+function setup() {
 
-    createCanvas(windowWidth,windowHeight);
-    frameRate(30);
+    createCanvas(windowWidth - 20, windowHeight - 20);
+    frameRate(60);
     smooth();
 
 
+
+
+
 }
 
-function draw(){
+function draw() {
 
-    if(menuI == 0){
-     menuInicial();
+    if (menuI == 0) {
+
+        menuInicial();
+    }
+
+    if (menuI == 2) {
+
+        menuComoJogar();
+
+    }
+
+    if (jogo) {
+
+        noCursor();
+
+        background(20, 200, 178);
+
+        pxS = player.playerX ;
+        pyS = player.playerY;
+
+        push();
+        orientaSeringaMouse();
+        pop();
+
+        player.iniciarPlayer();
+
+        detetaKeys();
+        player.movePlayer();
+
+
     }
 
 
 }
 
-function botoesMenu( bool ){
+function orientaSeringaMouse(){
 
-    if(bool){
+    let dx = mouseX - pxS; // Diferença entre o rato e a posição X da seringa
+    let dy = mouseY - pyS; // Diferença entre o rato e a posição Y da seringa
+    let angulo = atan2(dy, dx); // Calcula o ângulo em radianos
+    
+    // Move o ponto de origem para a posição da seringa e gira-a
+    translate(pxS, pyS);
+    rotate(angulo);
 
+    // Desenha a seringa na posição correta após rotação
 
+    image(seringa, 0, 0); // O ponto de origem está agora na seringa
 
-    }
-
+    
 }
-
-
+// -- Quando clicado e largado 
 function mouseClicked() {
 
-if (menuI == 0) {
-  if (mouseX < 200 && mouseX > 50) {
-    if (mouseY < 125 && mouseY > 50) {
-      MENU = 1
+    if (menuI == 0) {
+
+        // Verifica o primeiro retângulo ("Jogar")
+        if (mouseX > windowWidth / 2 - 150 && mouseX < windowWidth / 2 + 150) {
+            if (mouseY > windowHeight / 2 - 215 && mouseY < windowHeight / 2 - 115) {
+                menuI = 1;
+
+                jogo = true;
+
+            }
+        }
+
+        // Verifica o segundo retângulo ("Como Jogar")
+        if (mouseX > windowWidth / 2 - 150 && mouseX < windowWidth / 2 + 150) {
+            if (mouseY > windowHeight / 2 - 65 && mouseY < windowHeight / 2 + 35) {
+                menuI = 2; // Como Jogar
+                console.log("tou a ver 2");
+            }
+        }
     }
-    if (mouseY < 275 && mouseY > 200) {
-      MENU = 2
-    }
-    if (mouseY < 425 && mouseY > 350) {
-      MENU = 3
-    }
-  }
-}
 }
 
-function menuInicial(){
+function menuInicial() {
 
-    background(255);
+    background(175);
+
+
+    //primeiro "botao" jogar
     fill(0, 255, 0);
-    rect(windowWidth/2, windowHeight/2 - 100, 200, 75);
-    
+    rect(windowWidth / 2 - 150, windowHeight / 2 - 215, 300, 100);
+
+    //segundo "botao" como jogar
     fill(255, 0, 255);
-    rect(windowWidth/2, windowHeight/2, 200, 75);
-    
-    fill(255, 0, 0);
-    rect(windowWidth/2, windowHeight/2 + 100, 200, 75);
-    
+    rect(windowWidth / 2 - 150, windowHeight / 2 - 65, 300, 100);
+
+
+    textSize(40);
     textAlign(CENTER);
 
     fill(255);
-    text('Jogar', windowWidth,  windowHeight/2 - 100);
+    text('Jogar', windowWidth / 2, windowHeight / 2 - 150);
+    text('Como Jogar', windowWidth / 2, windowHeight / 2);
 
-    text('Como Jogar', windowWidth/2, windowHeight/2);
-
-    text('Sair', windowWidth/2,  windowHeight/2 + 100);
-
-    
-    if (MENU == 1) {
-    background(0, 255, 0)
-    fill(0)
-    textSize(20)
-    text('Right Click to return to MENU', 525, 30)
-    if (mouseButton == RIGHT) {
-      MENU = 0
-    }
-    } // START GAME
-    if (MENU == 2) {
-    background(255, 0, 255)
-    textSize(20)
-    text('Right Click to return to MENU', 525, 30)
-    textSize(30)
-    text('1. Rocks will fall from the top of the screen.', 50, 150)
-    text('2. Move your character using arrow keys', 50, 200)
-    text('<- and -> to avoid being crushed.', 80, 240)
-    text('3. The game is over when a rock hits you.', 50, 290)
-    if (mouseButton == RIGHT) {
-      MENU = 0
-    }
-    } // INSTRUCTIONS
-    if (MENU == 3) {
-    background(255, 0, 0)
-    textSize(75)
-    text('COME AGAIN SOON!', 25, height / 2)
-    }
-    
-    
 
 }
 
 function detetaKeys() {
 
     if (estado_keyUp) {
-        posY -= vY;
+
+        player.movePlayer(estado_keyUp);
+
     }
 
     if (estado_keyDown) {
-        posY += vY;
+        player.movePlayer(estado_keyDown);
     }
 
     if (estado_keyLeft) {
-        posX -= vX;
+        player.movePlayer(estado_keyLeft);
     }
 
     if (estado_keyRight) {
-        posX += vX;
+        player.movePlayer(estado_keyRight);
     }
 
 }
@@ -216,8 +235,24 @@ function keyReleased() {
 
 }
 
-function iniciarPlayer(){
+function menuComoJogar() {
 
+    background(255, 0, 255)
+    textSize(20)
+    text('Right Click para voltares para o Menu', windowWidth / 2, 100)
+    textSize(30)
+    text('blablabla', windowWidth / 2, windowHeight / 2)
+    text('2. Move a tua personagem usando as setinhas ou o WASD', windowWidth / 2, windowHeight / 2 + 100)
+    text('blablabla', windowWidth / 2, windowHeight / 2 + 150)
+    text('balaval', windowWidth / 2, windowHeight / 2 + 200)
+    if (mouseButton == RIGHT) {
+        menuI = 0
+    }
 
-    
+}
+
+function carregaMedia(){
+
+    seringa = loadImage("assets/img/seringa1.png");
+
 }
