@@ -15,31 +15,41 @@ class Player {
 
     movePlayer() {
 
-        /*
-                if(this.playerX > width - this.player.width/2 || this.playerX < 0 + this.player.width/2 || this.playerY > height - this.player.height/2 || this.playerY < 0 + this.player.height/2){
-        
-                    if (this.playerX > width) {
-                        //this.playerX = width - this.diam/2;
-                        this.playerVelX = -this.playerVelX;
-                        console.log("bateu??");
-                    }
-            
-                    if (this.playerX < 0 ) {
-                       // this.playerX = 0 + this.diam/2;
-                        this.playerVelX = -this.playerVelX;
-                    }
-            
-                    if (this.playerY > height) {
-                      //  this.playerY = height - this.diam/2;
-                        this.playerVelY = -this.playerVelY;
-                    }
-            
-                    if (this.playerY < 0 ) {
-                      //  this.playerY = 0 + this.diam/2;
-                        this.playerVelY = -this.playerVelY;
-                    }
-        
-                }*/
+        let velX = 0;
+        let velY = 0;
+    
+        if (estado_keyUp) {
+            this.mudaImagem("C");
+            velY = -this.vel;
+        }
+    
+        if (estado_keyDown) {
+            this.mudaImagem("T");
+            velY = this.vel;
+        }
+    
+        if (estado_keyLeft) {
+            this.mudaImagem("L");
+            velX = -this.vel;
+        }
+    
+        if (estado_keyRight) {
+            this.mudaImagem("R");
+            velX = this.vel;
+        }
+    
+        // -- Verificar se está a andar tanto no eixo x como y
+        if (velX !== 0 && velY !== 0) {
+
+            // Normaliza a velocidade usando o teorema de pitágoras pq a velocidade na diagonal é igual a v*sqrt(2), logo temos que dividir por sqrt(2)
+
+            velX /= Math.sqrt(2);
+            velY /= Math.sqrt(2);
+        }
+    
+        this.playerX += velX;
+        this.playerY += velY;
+
 
         if (this.playerX > width - this.player.width / 2 || this.playerX < 0 + this.player.width / 2 || this.playerY > height - this.player.height / 2 || this.playerY < 0 + this.player.height / 2) {
 
@@ -63,26 +73,6 @@ class Player {
                 this.playerY = 0 + this.player.height / 2;
                 this.playerVelY = - this.playerVelY;
             }
-        }
-
-        if (estado_keyUp) {
-            this.mudaImagem("C");
-            this.playerY -= this.vel;
-        }
-
-        if (estado_keyDown) {
-            this.mudaImagem("T");
-            this.playerY += this.vel;
-        }
-
-        if (estado_keyLeft) {
-            this.mudaImagem("L");
-            this.playerX -= this.vel;
-        }
-
-        if (estado_keyRight) {
-            this.mudaImagem("R");
-            this.playerX += this.vel;
         }
 
     }
