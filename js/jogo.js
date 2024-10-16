@@ -9,8 +9,11 @@ let estado_keyDown = false;
 let estado_keyLeft = false;
 let estado_keyRight = false;
 
+let player;
 let seringa;
 
+
+/*
 let dirSeringa; // Para armazenar o ângulo da direção
 
 let atacando = false; // Para verificar se a seringa está em ataque
@@ -19,8 +22,10 @@ let intervaloAtaque = 500; // 500ms de intervalo para o ataque
 
 let pxS, pyS; // Posição atual da seringa
 let pxS_inicial, pyS_inicial; // Posição inicial da seringa
-
+*/
 var input;
+
+let volume;
 
 
 
@@ -28,7 +33,8 @@ function preload() {
 
     carregaMedia();
     player = new Player(windowWidth / 2, windowHeight - 20);
-
+    seringa = new Seringa (player.playerX,player.playerY - 35);
+    console.log(player.playerX + "   " + player.playerY);
 
 }
 
@@ -63,67 +69,29 @@ function draw() {
 
         background(20, 200, 178);
 
-        pxS = player.playerX;
-        pyS = player.playerY;
-
-        push();
-        orientaSeringaMouse();
-        pop();
+      /* 
+       push();
+       seringa.orientaSeringaMouse(); // Orienta a seringa em direção ao rato
+       pop();
+*/
 
         player.iniciarPlayer();
 
+
         detetaKeys();
+
         player.movePlayer();
+        seringa.moveSeringa(player.playerX, player.playerY );
 
         // Só tenta buscar o nível se o input foi inicializado
         if (input) {
             let volume = input.getLevel(); // vai buscar o nivel de volume
-            atacaVacina(volume);
+
         }
     }
 }
 
-function atacaVacina(volume) {
 
-    let velocidade = volume * 10; // Multiplica o volume para ajustar a velocidade
-
-    if (!atacando) {
-        // Inicia o ataque
-        pxS += cos(dirSeringa) * velocidade; // Avança na direção X
-        pyS += sin(dirSeringa) * velocidade; // Avança na direção Y
-        atacando = true; // Marca como atacando
-        tempoInicial = millis(); // Guarda o tempo inicial do ataque
-    } else {
-        // Verifica se o intervalo de ataque já passou
-        if (millis() - tempoInicial > intervaloAtaque) {
-            // Volta para a posição original
-            pxS = pxS_inicial;
-            pyS = pyS_inicial;
-            atacando = false; // Reseta o estado de ataque
-        }
-    }
-
-
-}
-
-function orientaSeringaMouse() {
-
-    let dx = mouseX - pxS; // Diferença entre o rato e a posição X da seringa
-    let dy = mouseY - pyS; // Diferença entre o rato e a posição Y da seringa
-    let angulo = atan2(dy, dx); // Calcula o ângulo em radianos
-
-    dirSeringa = angulo;
-
-    // Move o ponto de origem para a posição da seringa e gira-a
-    translate(pxS, pyS);
-    rotate(angulo);
-
-    // Desenha a seringa na posição correta após rotação
-
-    image(seringa, 0, 0); // O ponto de origem está agora na seringa
-
-
-}
 // -- Quando clicado e largado 
 function mouseClicked() {
 
@@ -147,6 +115,9 @@ function mouseClicked() {
             }
         }
     }
+
+
+
 }
 
 function menuInicial() {
@@ -178,19 +149,21 @@ function detetaKeys() {
     if (estado_keyUp) {
 
         player.movePlayer(estado_keyUp);
-
     }
 
     if (estado_keyDown) {
         player.movePlayer(estado_keyDown);
+
     }
 
     if (estado_keyLeft) {
         player.movePlayer(estado_keyLeft);
+
     }
 
     if (estado_keyRight) {
         player.movePlayer(estado_keyRight);
+
     }
 
 }
@@ -287,7 +260,7 @@ function menuComoJogar() {
 
 function carregaMedia() {
 
-    seringa = loadImage("assets/img/seringa1.png");
+
 
 }
 

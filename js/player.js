@@ -5,9 +5,10 @@ class Player {
         this.playerX = px;
         this.playerY = py;
 
-        this.vel = 1;
+        this.vel = 2;
 
-
+        this.velX = 0;
+        this.velY = 0;
 
         this.player = loadImage("assets/img/player.png");
 
@@ -15,47 +16,51 @@ class Player {
 
     movePlayer() {
 
-        let velX = 0;
-        let velY = 0;
-    
+        this.velX = 0;
+        this.velY = 0;
+
+
         if (estado_keyUp) {
             this.mudaImagem("C");
-            velY = -this.vel;
+            this.velY = -this.vel;
         }
-    
+
         if (estado_keyDown) {
             this.mudaImagem("T");
-            velY = this.vel;
+            this.velY = this.vel;
         }
-    
+
         if (estado_keyLeft) {
             this.mudaImagem("L");
-            velX = -this.vel;
+            this.velX = -this.vel;
         }
-    
+
         if (estado_keyRight) {
             this.mudaImagem("R");
-            velX = this.vel;
+            this.velX = this.vel;
         }
-    
+
         // -- Verificar se está a andar tanto no eixo x como y
-        if (velX !== 0 && velY !== 0) {
+        //if (velX !== 0 && velY !== 0) {
 
             // Normaliza a velocidade usando o teorema de pitágoras pq a velocidade na diagonal é igual a v*sqrt(2), logo temos que dividir por sqrt(2)
 
-            velX /= Math.sqrt(2);
-            velY /= Math.sqrt(2);
-        }
-    
-        this.playerX += velX;
-        this.playerY += velY;
+           // velX /= Math.sqrt(2);
+           // velY /= Math.sqrt(2);
+        //}
+        const {x,y} = this.VectorWithNorm(this.vel,this.velX,this.velY);
+        this.playerX += x;
+        this.playerY += y;
+        console.log("player: " + this.playerX + "   sad" +  this.playerY);
 
+
+        // seringa.moveSeringa(velX,velY);
 
         if (this.playerX > width - this.player.width / 2 || this.playerX < 0 + this.player.width / 2 || this.playerY > height - this.player.height / 2 || this.playerY < 0 + this.player.height / 2) {
 
             // -- reflecte nas paredes
             if (this.playerX > width - this.player.width / 2) {
-                this.playerX = width - this.player.width / 2 ;
+                this.playerX = width - this.player.width / 2;
                 this.playerVelX = - this.playerVelX;
             }
 
@@ -77,11 +82,26 @@ class Player {
 
     }
 
-
-
-
-
-
+    GetNorma(x,y) {
+        let value = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        return value;
+    }
+    
+    VectorWithNorm(norma, px,py) {
+    
+        var h = this.GetNorma(px,py) / norma;
+        var vetorX = px;
+        var vetorY = py;
+        if (h != 0) {
+            vetorX = px / h;
+            vetorY = py/h;
+        }
+    
+        return {
+            x:vetorX,
+            y:vetorY
+        };
+    }
 
     eliminaplayer() {
 
@@ -115,11 +135,9 @@ class Player {
 
         }
 
-
     }
 
     iniciarPlayer() {
-
 
         imageMode(CENTER);
         image(this.player, this.playerX, this.playerY);
