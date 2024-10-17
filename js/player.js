@@ -11,10 +11,10 @@ class Player {
 
 
          
-        this.playerImg = loadImage("assets/img/player.png");
-        this.playerImgT = loadImage("assets/img/playerT.png");
-        this.playerImgL = loadImage("assets/img/playerL.png");
-        this.playerImgR = loadImage("assets/img/playerR.png");
+        this.playerImg = loadImage("assets/img/Player/player.png");
+        this.playerImgT = loadImage("assets/img/Player/playerT.png");
+        this.playerImgL = loadImage("assets/img/Player/playerL.png");
+        this.playerImgR = loadImage("assets/img/Player/playerR.png");
 
         this.player = this.playerImg; 
 
@@ -27,33 +27,9 @@ class Player {
             return;
         }
 
-        /*
-                if(this.playerX > width - this.player.width/2 || this.playerX < 0 + this.player.width/2 || this.playerY > height - this.player.height/2 || this.playerY < 0 + this.player.height/2){
-        
-                    if (this.playerX > width) {
-                        //this.playerX = width - this.diam/2;
-                        this.playerVelX = -this.playerVelX;
-                        console.log("bateu??");
-                    }
-            
-                    if (this.playerX < 0 ) {
-                       // this.playerX = 0 + this.diam/2;
-                        this.playerVelX = -this.playerVelX;
-                    }
-            
-                    if (this.playerY > height) {
-                      //  this.playerY = height - this.diam/2;
-                        this.playerVelY = -this.playerVelY;
-                    }
-            
-                    if (this.playerY < 0 ) {
-                      //  this.playerY = 0 + this.diam/2;
-                        this.playerVelY = -this.playerVelY;
-                    }
-        
-                }*/
 
-        if (this.playerX > width - this.player.width / 2 || this.playerX < 0 + this.player.width / 2 || this.playerY > height - this.player.height / 2 || this.playerY < 0 + this.player.height / 2) {
+
+        if (this.playerX > width - this.player.width / 2 || this.playerX < 0 + this.player.width / 2 || this.playerY > height - this.player.height / 2 || this.playerY < 100 + this.player.height / 2) {
 
             // -- reflecte nas paredes
             if (this.playerX > width - this.player.width / 2) {
@@ -71,8 +47,8 @@ class Player {
                 this.playerVelX = - this.playerVelX;
             }
 
-            if (this.playerY < 0 + this.player.height / 2) {
-                this.playerY = 0 + this.player.height / 2;
+            if (this.playerY < 100 + this.player.height / 2) {
+                this.playerY = 100 + this.player.height / 2;
                 this.playerVelY = - this.playerVelY;
             }
         }

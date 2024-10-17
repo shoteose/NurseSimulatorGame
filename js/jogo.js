@@ -5,6 +5,13 @@ let menuI = 0;
 // saber se já está em jogo ou não
 let jogo = false;
 
+let inimigo;
+
+let balas = [];
+let inimigos = [];
+
+let nrInimigos = 5;
+let nrInimigosT = 5;
 
 // estados para saber se foi clicado ou não para andar a personagem
 let estado_keyUp = false;
@@ -82,7 +89,7 @@ function draw() {
             player.movePlayer();
         }
 
-
+        mostraInim();
 
 
 
@@ -91,6 +98,16 @@ function draw() {
     }
 
 
+}
+
+function initInimigos() {
+    for (let j = 0; j < nrInimigos; j++) {
+        let pInicialX = random(width);
+        let pInicialY = random(height);
+
+        inim = new Inimigo(pInicialX, pInicialY);
+        inimigos.push(inim);
+    }
 }
 
 
@@ -105,6 +122,7 @@ function mouseClicked() {
                 menuI = 1;
 
                 jogo = true;
+                initInimigos();
 
             }
         }
@@ -167,7 +185,11 @@ function detetaKeys() {
 
 function keyPressed() {
 
+
+
     if(!atacando){
+
+
 
         if (key == "f") {  
             if (!atacando) {
@@ -176,6 +198,26 @@ function keyPressed() {
             }
         }
     
+        if(key == "q"){
+
+            seringa.mudaImagem(1);
+            seringa
+    
+        }
+
+        if(key == "e"){
+
+            seringa.mudaImagem(2);
+            seringa
+    
+        }
+
+        if(key == "r"){
+
+            seringa.mudaImagem(3);
+            seringa
+    
+        }
     
         if (key == "w") {
             estado_keyUp = true;
@@ -274,4 +316,28 @@ function menuComoJogar() {
 }
 
 function carregaMedia(){
+}
+
+function mostraInim() {
+
+    if (inimigos.length > 0) {
+
+        for (let j = 0; j < inimigos.length; j++) {
+
+            inimigos[j].moveInimigo();
+
+            inimigoT = inimigos[j];
+        }
+    } 
+
+
+
+}
+
+function removeInimigo(obj) {
+    let index = inimigos.indexOf(obj);
+
+    if (index > -1) {
+        inimigos.splice(index, 1);
+    }
 }

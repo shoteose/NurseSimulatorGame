@@ -24,15 +24,16 @@ class Seringa {
 
         //this.img;
 
+        //tipo de seringa
         this.nr = 1;
 
         // Carrega as imagens todas, para depois não estar sempre a carregar, fazia com que ás vezes desaparece-se a personagem
-        this.seringa1 = loadImage("assets/img/seringa1.png");
-        this.seringa2 = loadImage("assets/img/seringa2.png");
-        this.seringa3 = loadImage("assets/img/seringa3.png");
-        this.seringa1V = loadImage("assets/img/seringa1V.png");
-        this.seringa2V = loadImage("assets/img/seringa2V.png");
-        this.seringa3V = loadImage("assets/img/seringa3V.png");
+        this.seringa1 = loadImage("assets/img/Seringas/seringa1.png");
+        this.seringa2 = loadImage("assets/img/Seringas/seringa2.png");
+        this.seringa3 = loadImage("assets/img/Seringas/seringa3.png");
+        this.seringa1V = loadImage("assets/img/Seringas/seringa1V.png");
+        this.seringa2V = loadImage("assets/img/Seringas/seringa2V.png");
+        this.seringa3V = loadImage("assets/img/Seringas/seringa3V.png");
         this.seringa = this.seringa1;
     }
 
@@ -41,12 +42,15 @@ class Seringa {
         switch (nrA) {
             case 1:
                 this.seringa = this.seringa1;
+                this.nr = 1;
                 break;
             case 2:
                 this.seringa = this.seringa2;
+                this.nr = 2;
                 break;
             case 3:
                 this.seringa = this.seringa2;
+                this.nr = 3;
                 break;
         }
     }
