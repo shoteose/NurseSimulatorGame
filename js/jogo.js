@@ -1,21 +1,25 @@
-let menuI = 0;
-let botaoJogar;
-let botaoInfo;
 
+// Saber em que parte do menu está
+let menuI = 0;
+
+// saber se já está em jogo ou não
 let jogo = false;
 
 
-
+// estados para saber se foi clicado ou não para andar a personagem
 let estado_keyUp = false;
 let estado_keyDown = false;
 let estado_keyLeft = false;
 let estado_keyRight = false;
 
-let player;
-
+// Para asaber a direção para qual está virado ( Esquerda = false // direita = true)
 let dir = true;
 
+//Para saber quando está a atacar ou não
+let atacando = false;
 
+
+// preload ao player e á seringa
 function preload() {
 
     carregaMedia();
@@ -60,11 +64,27 @@ function draw() {
         player.iniciarPlayer();
 
 
-        detetaKeys();
+        // caso atacar seja verdade, chama a função para atacar
+        if (atacando) {
 
-        seringa.mudaImagemV();
-        seringa.moveSeringa(player.playerX,player.playerY);
-        player.movePlayer();
+            seringa.atacaSeringa();
+
+        } else {
+
+        // se não está a atacar, a pesonagem pode andar
+            detetaKeys();  
+
+        //muda a direção da seringa (imagem)
+            seringa.mudaImagemV();
+
+        // a seringa anda sempre com o player
+            seringa.moveSeringa(player.playerX,player.playerY);
+            player.movePlayer();
+        }
+
+
+
+
 
 
 
@@ -147,43 +167,57 @@ function detetaKeys() {
 
 function keyPressed() {
 
-    if (key == "w") {
-        estado_keyUp = true;
-    }
-    if (key == "s") {
-        estado_keyDown = true;
-    }
-    if (key == "d") {
-        estado_keyRight = true;
-        dir = true;
-    }
-    if (key == "a") {
-        estado_keyLeft = true;
-        dir = false;
-    }
+    if(!atacando){
 
-    switch (keyCode) {
-
-        case UP_ARROW:
+        if (key == "f") {  
+            if (!atacando) {
+                atacando = true;
+                seringa.distPercorrida = 0;  // Reseta a distância percorrida
+            }
+        }
+    
+    
+        if (key == "w") {
             estado_keyUp = true;
-            break;
-
-        case DOWN_ARROW:
+        }
+        if (key == "s") {
             estado_keyDown = true;
-            break;
-
-        case LEFT_ARROW:
-            estado_keyLeft = true;
-            dir = false;
-            break;
-
-        case RIGHT_ARROW:
+        }
+        if (key == "d") {
             estado_keyRight = true;
             dir = true;
-            break;
-
+        }
+        if (key == "a") {
+            estado_keyLeft = true;
+            dir = false;
+        }
+    
+        switch (keyCode) {
+    
+            case UP_ARROW:
+                estado_keyUp = true;
+                break;
+    
+            case DOWN_ARROW:
+                estado_keyDown = true;
+                break;
+    
+            case LEFT_ARROW:
+                estado_keyLeft = true;
+                dir = false;
+                break;
+    
+            case RIGHT_ARROW:
+                estado_keyRight = true;
+                dir = true;
+                break;
+    
+    
+        }
 
     }
+
+    
 
 }
 

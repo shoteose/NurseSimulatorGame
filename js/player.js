@@ -22,6 +22,11 @@ class Player {
 
     movePlayer() {
 
+        if (atacando) {
+            // não te mexas desgraçado
+            return;
+        }
+
         /*
                 if(this.playerX > width - this.player.width/2 || this.playerX < 0 + this.player.width/2 || this.playerY > height - this.player.height/2 || this.playerY < 0 + this.player.height/2){
         
