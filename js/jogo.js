@@ -4,23 +4,23 @@ let botaoInfo;
 
 let jogo = false;
 
+
+
 let estado_keyUp = false;
 let estado_keyDown = false;
 let estado_keyLeft = false;
 let estado_keyRight = false;
 
-let seringa;
+let player;
 
-let dirSeringa = true;
-
-let pxS;
-let pyS;
+let dir = true;
 
 
 function preload() {
 
     carregaMedia();
     player = new Player(windowWidth / 2, windowHeight - 20);
+    seringa = new Seringa(player.playerX, player.playerY);
 
 
 }
@@ -56,17 +56,16 @@ function draw() {
 
         background(20, 200, 178);
 
-        pxS = player.playerX ;
-        pyS = player.playerY;
-
-        push();
-        orientaSeringaMouse();
-        pop();
-
+        seringa.iniciarSeringa();
         player.iniciarPlayer();
 
+
         detetaKeys();
+
+        seringa.mudaImagemV();
+        seringa.moveSeringa(player.playerX,player.playerY);
         player.movePlayer();
+
 
 
     }
@@ -74,22 +73,7 @@ function draw() {
 
 }
 
-function orientaSeringaMouse(){
 
-    let dx = mouseX - pxS; // Diferença entre o rato e a posição X da seringa
-    let dy = mouseY - pyS; // Diferença entre o rato e a posição Y da seringa
-    let angulo = atan2(dy, dx); // Calcula o ângulo em radianos
-    
-    // Move o ponto de origem para a posição da seringa e gira-a
-    translate(pxS, pyS);
-    rotate(angulo);
-
-    // Desenha a seringa na posição correta após rotação
-
-    image(seringa, 0, 0); // O ponto de origem está agora na seringa
-
-    
-}
 // -- Quando clicado e largado 
 function mouseClicked() {
 
@@ -143,20 +127,20 @@ function detetaKeys() {
 
     if (estado_keyUp) {
 
-        player.movePlayer(estado_keyUp);
+        player.movePlayer();
 
     }
 
     if (estado_keyDown) {
-        player.movePlayer(estado_keyDown);
+        player.movePlayer();
     }
 
     if (estado_keyLeft) {
-        player.movePlayer(estado_keyLeft);
+        player.movePlayer();
     }
 
     if (estado_keyRight) {
-        player.movePlayer(estado_keyRight);
+        player.movePlayer();
     }
 
 }
@@ -171,9 +155,11 @@ function keyPressed() {
     }
     if (key == "d") {
         estado_keyRight = true;
+        dir = true;
     }
     if (key == "a") {
         estado_keyLeft = true;
+        dir = false;
     }
 
     switch (keyCode) {
@@ -188,10 +174,12 @@ function keyPressed() {
 
         case LEFT_ARROW:
             estado_keyLeft = true;
+            dir = false;
             break;
 
         case RIGHT_ARROW:
             estado_keyRight = true;
+            dir = true;
             break;
 
 
@@ -252,7 +240,4 @@ function menuComoJogar() {
 }
 
 function carregaMedia(){
-
-    seringa = loadImage("assets/img/seringa1.png");
-
 }

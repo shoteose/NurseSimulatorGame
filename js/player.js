@@ -7,9 +7,16 @@ class Player {
 
         this.vel = 1;
 
+        this.diam = 92;
 
 
-        this.player = loadImage("assets/img/player.png");
+         
+        this.playerImg = loadImage("assets/img/player.png");
+        this.playerImgT = loadImage("assets/img/playerT.png");
+        this.playerImgL = loadImage("assets/img/playerL.png");
+        this.playerImgR = loadImage("assets/img/playerR.png");
+
+        this.player = this.playerImg; 
 
     }
 
@@ -105,22 +112,22 @@ class Player {
 
             case "C":
 
-                this.player = loadImage("assets/img/player.png");
+                this.player = this.playerImg; 
                 break;
 
             case "T":
 
-                this.player = loadImage("assets/img/playerT.png");
+            this.player = this.playerImgT; 
                 break;
 
             case "L":
-                this.player = loadImage("assets/img/playerL.png");
+                this.player = this.playerImgL; 
 
                 break;
 
             case "R":
 
-                this.player = loadImage("assets/img/playerR.png");
+            this.player = this.playerImgR; 
                 break;
 
         }
