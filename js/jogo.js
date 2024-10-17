@@ -22,8 +22,11 @@ let estado_keyRight = false;
 // Para asaber a direção para qual está virado ( Esquerda = false // direita = true)
 let dir = true;
 
+
 //Para saber quando está a atacar ou não
 let atacando = false;
+
+let back;
 
 
 // preload ao player e á seringa
@@ -32,6 +35,8 @@ function preload() {
     carregaMedia();
     player = new Player(windowWidth / 2, windowHeight - 20);
     seringa = new Seringa(player.playerX, player.playerY);
+
+    this.back = loadImage("assets/img/backgroundTeste.png");
 
 
 }
@@ -51,11 +56,13 @@ function setup() {
 function draw() {
 
     if (menuI == 0) {
+        background(20, 200, 178);
 
         menuInicial();
     }
 
     if (menuI == 2) {
+        background(20, 200, 178);
 
         menuComoJogar();
 
@@ -65,14 +72,16 @@ function draw() {
 
         noCursor();
 
-        background(20, 200, 178);
+        
+        image(this.back, 0, 0);
 
+        mostraInim();
         seringa.iniciarSeringa();
         player.iniciarPlayer();
 
 
         // caso atacar seja verdade, chama a função para atacar
-        if (atacando) {
+        if (atacando ) {
 
             seringa.atacaSeringa();
 
@@ -89,7 +98,7 @@ function draw() {
             player.movePlayer();
         }
 
-        mostraInim();
+
 
 
 
@@ -192,7 +201,7 @@ function keyPressed() {
 
 
         if (key == "f") {  
-            if (!atacando) {
+            if (!atacando ) {
                 atacando = true;
                 seringa.distPercorrida = 0;  // Reseta a distância percorrida
             }
@@ -201,21 +210,21 @@ function keyPressed() {
         if(key == "q"){
 
             seringa.mudaImagem(1);
-            seringa
+           // fazer mudar 
     
         }
 
         if(key == "e"){
 
             seringa.mudaImagem(2);
-            seringa
+            
     
         }
 
         if(key == "r"){
 
             seringa.mudaImagem(3);
-            seringa
+            
     
         }
     
@@ -224,34 +233,43 @@ function keyPressed() {
         }
         if (key == "s") {
             estado_keyDown = true;
+
         }
         if (key == "d") {
             estado_keyRight = true;
             dir = true;
+
+
         }
         if (key == "a") {
             estado_keyLeft = true;
             dir = false;
+
+
         }
     
         switch (keyCode) {
     
             case UP_ARROW:
                 estado_keyUp = true;
+
                 break;
     
             case DOWN_ARROW:
                 estado_keyDown = true;
+
                 break;
     
             case LEFT_ARROW:
                 estado_keyLeft = true;
                 dir = false;
+
                 break;
     
             case RIGHT_ARROW:
                 estado_keyRight = true;
                 dir = true;
+
                 break;
     
     

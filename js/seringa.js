@@ -13,7 +13,7 @@ class Seringa {
         this.seringaX = px + this.offsetX;
         this.seringaY = py + this.offsetY;;
 
-        this.maxDist = 100;  // Distância máxima que a seringa pode viajar antes de voltar
+        this.maxDist = 25;  // Distância máxima que a seringa pode viajar antes de voltar
         this.distPercorrida = 0;  // Distância percorrida pela seringa
         this.retornando = false;  // Controle para saber se está voltando
 
@@ -84,6 +84,7 @@ class Seringa {
             if (this.distPercorrida <= 0) {
                 this.retornando = false;
                 atacando = false;  // Termina o ataque
+                
             }
         }
     }
