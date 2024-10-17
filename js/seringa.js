@@ -7,7 +7,8 @@ class Seringa {
         this.offsetY = 10;
 
         //para depois as colisões
-        this.diam = 100;
+        this.diamX = 100;
+        this.diamY = 30;
 
         this.seringaX = px + this.offsetX;
         this.seringaY = py + this.offsetY;;
@@ -17,10 +18,10 @@ class Seringa {
         this.retornando = false;  // Controle para saber se está voltando
 
         //velocidade da seringa
-        this.vel = 2
+        this.vel = 2;
 
         //velocidade de ataque ( velocidade no qual percorre)
-        this.velATK = 2
+        this.velATK = 5;
 
         //this.img;
 

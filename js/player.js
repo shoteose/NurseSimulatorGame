@@ -7,7 +7,9 @@ class Player {
 
         this.vel = 1;
 
-        this.diam = 92;
+        this.diamX = 92;
+        this.diamY = 104;
+
 
 
          

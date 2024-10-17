@@ -11,7 +11,8 @@ class Inimigo{
         this.inimigoVelX = this.vel * cos(this.dir);
         this.inimigoVelY = this.vel * sin (this.dir);
 
-        this.diam = 37;
+        this.diamX = 95;
+        this.diamY = 104;
 
         this.nivelDoente = 0
 
@@ -22,6 +23,7 @@ class Inimigo{
         this.inimigoGeral = loadImage("assets/img/Inimigos/inimigo.png");
         this.inimigoR2 = loadImage("assets/img/Inimigos/inimigoR2.png");
         this.inimigoR3 = loadImage("assets/img/Inimigos/inimigoR3.png");
+        this.inimigoR4 = loadImage("assets/img/Inimigos/inimigoR4.png");
 
         this.inimigo = this.inimigoGeral;
     }
@@ -64,12 +66,7 @@ class Inimigo{
     
 
     adoeceu(){
-/*
-        console.log("Imagem atual:", this.inimigo);
-        console.log("millis():", millis());
-        console.log("this.tempo:", this.tempo);
-        console.log("this.intervalo:", this.intervalo);
-*/
+
         if(millis() - this.tempo > this.intervalo){
 
             switch(this.nivelDoente){
@@ -87,8 +84,14 @@ class Inimigo{
                 this.nivelDoente++;
                     break;
                 case 2:
+                    this.inimigo = this.inimigoR4;
                     console.log(this.nivelDoente);
-                this.eliminaInimigo();
+
+                    this.vel=0;
+                    this.dir=0;
+                    this.inimigoVelX = 0;
+                    this.inimigoVelY = 0;
+
                     break;
 
             }
