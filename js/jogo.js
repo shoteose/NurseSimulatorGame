@@ -7,7 +7,6 @@ let jogo = false;
 
 let inimigo;
 
-let balas = [];
 let inimigos = [];
 
 let nrInimigos = 5;
@@ -26,7 +25,6 @@ let dir = true;
 //Para saber quando está a atacar ou não
 let atacando = false;
 
-let back;
 
 
 // preload ao player e á seringa
@@ -36,7 +34,8 @@ function preload() {
     player = new Player(windowWidth / 2, windowHeight - 20);
     seringa = new Seringa(player.playerX, player.playerY);
 
-    this.back = loadImage("assets/img/backgroundTeste.png");
+    back = loadImage("assets/img/backgroundTeste.png");
+
 
 
 }
@@ -73,6 +72,8 @@ function draw() {
         noCursor();
 
         
+       // image(this.back, 0, 0);
+        back.resize(windowWidth - 20, windowHeight - 20);
         image(this.back, 0, 0);
 
         mostraInim();
@@ -119,6 +120,16 @@ function initInimigos() {
     }
 }
 
+function colide(x1, y1, w1, h1, x2, y2, w2, h2) {
+  
+    // test for collision
+    if (x1+w1/2 >= x2-w2/2 && x1-w1/2 <= x2+w2/2 && y1+h1/2 >= y2-h2/2 && y1-h1/2 <= y2+h2/2) {
+      return true;    // if a hit, return true
+    }
+    else {            // if not, return false
+      return false;
+    }
+  }
 
 // -- Quando clicado e largado 
 function mouseClicked() {

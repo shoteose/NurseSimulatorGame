@@ -67,6 +67,46 @@ class Seringa {
             }
             this.distPercorrida += this.velATK;
 
+            for (let inim of inimigos) {
+
+                if (this.rectRect(this.seringaX, this.seringaY, this.diamX, this.diamY, inim.inimigoX, inim.inimigoY, inim.diamX, inim.diamY)) {
+
+                    if(inim.tipoDoenca == "R" && this.nr == 1){
+
+
+                        if(!inim.morreu){
+
+                            console.log("TOCU DIRE");
+                            inim.nivelDoente = 0;
+                            inim.inimigo = inim.inimigoGeral;
+
+                        }
+
+
+                    }
+                    else if(inim.tipoDoenca == "G" && this.nr == 2){
+
+                        if(!inim.morreu){
+                        console.log("TOCU DIRE VERDE");
+                        inim.nivelDoente = 0;
+                        inim.inimigo = inim.inimigoGeral;
+                        }
+                    }
+
+                    else if(inim.tipoDoenca == "P" && this.nr == 3){
+
+                        if(!inim.morreu){
+                        console.log("TOCU DIRE ROXOOO");
+                        inim.nivelDoente = 0;
+                        inim.inimigo = inim.inimigoGeral;
+                        }
+                    }
+    
+    
+                   
+                }
+            }
+
             // Verifica se atingiu a distância máxima
             if (this.distPercorrida >= this.maxDist) {
                 this.retornando = true;
@@ -86,6 +126,17 @@ class Seringa {
                 atacando = false;  // Termina o ataque
                 
             }
+        }
+    }
+
+    rectRect(x1, y1, w1, h1, x2, y2, w2, h2) {
+
+        // test for collision
+        if (x1 + w1 / 2 >= x2 - w2 / 2 && x1 - w1 / 2 <= x2 + w2 / 2 && y1 + h1 / 2 >= y2 - h2 / 2 && y1 - h1 / 2 <= y2 + h2 / 2) {
+            return true;    // if a hit, return true
+        }
+        else {            // if not, return false
+            return false;
         }
     }
    

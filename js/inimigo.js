@@ -15,20 +15,39 @@ class Inimigo{
         this.diamY = 104;
 
         this.nivelDoente = 0
+        this.tipoDoenca;
+        this.morreu = false;
+        this.nrRandom = random(0,3);
+
+        if(this.nrRandom<1){
+            this.tipoDoenca = "R";
+        }
+
+        if(this.nrRandom < 2 && this.nrRandom >1){
+            this.tipoDoenca = "G";
+
+        }
+
+        if(this.nrRandom < 3 && this.nrRandom >2){
+            this.tipoDoenca = "P";
+
+        }
 
         this.intervalo = random(5000,10000);
         this.tempo = 0;
         this.inicio= millis();
 
         this.inimigoGeral = loadImage("assets/img/Inimigos/inimigo.png");
-        this.inimigoR2 = loadImage("assets/img/Inimigos/inimigoR2.png");
-        this.inimigoR3 = loadImage("assets/img/Inimigos/inimigoR3.png");
-        this.inimigoR4 = loadImage("assets/img/Inimigos/inimigoR4.png");
+        this.inimigo2 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "2.png");
+        this.inimigo3 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "3.png");
+        this.inimigo4 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "4.png");
 
         this.inimigo = this.inimigoGeral;
     }
 
     moveInimigo(){
+
+        
 
         this.adoeceu()
 
@@ -36,10 +55,52 @@ class Inimigo{
         this.inimigoY += this.inimigoVelY;
         
         imageMode(CENTER);
-        image(this.inimigo,this.inimigoX,this.inimigoY);  // Corrigido para this.inimigo
+        image(this.inimigo,this.inimigoX,this.inimigoY); 
         imageMode(CORNER);
+
+        this.refleteParede();
     
-        if (this.inimigoX > width - this.inimigo.width / 2 || this.inimigoX < 0 + this.inimigo.width / 2 || this.inimigoY > height - this.inimigo.height / 2 || this.inimigoY < 100 + this.inimigo.height / 2) {
+    }
+    
+
+    adoeceu(){
+
+        if(millis() - this.tempo > this.intervalo){
+
+            switch(this.nivelDoente){
+
+                case 0:
+                this.inimigo = this.inimigo2;
+                this.tempo = millis();
+                this.nivelDoente++;
+                    break;
+                case 1:
+                this.inimigo = this.inimigo3;
+                this.tempo = millis();
+                this.nivelDoente++;
+                    break;
+                case 2:
+                    this.inimigo = this.inimigo4;
+                   
+                    this.morreu=true;
+
+                    this.vel=0;
+                    this.dir=0;
+                    this.inimigoVelX = 0;
+                    this.inimigoVelY = 0;
+
+                    break;
+
+            }
+
+        }
+
+    }
+
+
+    refleteParede(){
+
+        if (this.inimigoX > width - this.inimigo.width / 2 || this.inimigoX < 0 + this.inimigo.width / 2 || this.inimigoY > height - this.inimigo.height / 2 || this.inimigoY < 50 + this.inimigo.height / 2) {
     
             // -- reflecte nas paredes
             if (this.inimigoX > width - this.inimigo.width / 2) {
@@ -57,49 +118,30 @@ class Inimigo{
                 this.inimigoVelX = - this.inimigoVelX;
             }
     
-            if (this.inimigoY < 100 + this.inimigo.height / 2) {
-                this.inimigoY = 100 + this.inimigo.height / 2;
+            if (this.inimigoY < 50 + this.inimigo.height / 2) {
+                this.inimigoY = 50 + this.inimigo.height / 2;
                 this.inimigoVelY = - this.inimigoVelY;
             }
         }
-    }
     
 
-    adoeceu(){
+    }
 
-        if(millis() - this.tempo > this.intervalo){
+    queDoencaTenho(){
 
-            switch(this.nivelDoente){
-
-                case 0:
-                this.inimigo = this.inimigoR2;
-                this.tempo = millis();
-                console.log(this.nivelDoente);
-                this.nivelDoente++;
-                    break;
-                case 1:
-                this.inimigo = this.inimigoR3;
-                this.tempo = millis();
-                console.log(this.nivelDoente);
-                this.nivelDoente++;
-                    break;
-                case 2:
-                    this.inimigo = this.inimigoR4;
-                    console.log(this.nivelDoente);
-
-                    this.vel=0;
-                    this.dir=0;
-                    this.inimigoVelX = 0;
-                    this.inimigoVelY = 0;
-
-                    break;
-
-            }
-
-        }
+        return this.tipoDoenca;
 
     }
 
+    mudarDoenca(nova){
+
+        this.tipoDoenca = nova;
+        this.inimigo2 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "2.png");
+        this.inimigo3 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "3.png");
+        this.inimigo4 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "4.png");
+
+
+    }
 
     eliminaInimigo(){
 
