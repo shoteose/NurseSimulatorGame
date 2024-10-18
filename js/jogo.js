@@ -10,13 +10,16 @@ let inimigo;
 let inimigos = [];
 
 let nrInimigos = 5;
-let nrInimigosT = 5;
 
 // estados para saber se foi clicado ou não para andar a personagem
 let estado_keyUp = false;
 let estado_keyDown = false;
 let estado_keyLeft = false;
 let estado_keyRight = false;
+
+let DeadCounter = 0;
+
+let pontuacao = 0;
 
 // Para asaber a direção para qual está virado ( Esquerda = false // direita = true)
 let dir = true;
@@ -25,6 +28,7 @@ let dir = true;
 //Para saber quando está a atacar ou não
 let atacando = false;
 
+let gameover = false;
 
 
 // preload ao player e á seringa
@@ -55,49 +59,96 @@ function setup() {
 function draw() {
 
     if (menuI == 0) {
+
+        cursor();
         background(20, 200, 178);
 
         menuInicial();
     }
 
     if (menuI == 2) {
+        cursor();
+
         background(20, 200, 178);
 
         menuComoJogar();
 
     }
 
+
+
     if (jogo) {
 
         noCursor();
 
-        
-       // image(this.back, 0, 0);
+
+        // image(this.back, 0, 0);
         back.resize(windowWidth - 20, windowHeight - 20);
         image(this.back, 0, 0);
 
-        mostraInim();
-        seringa.iniciarSeringa();
-        player.iniciarPlayer();
+        if (gameover) {
 
+            text("GAME OVER", 500, 500);
 
-        // caso atacar seja verdade, chama a função para atacar
-        if (atacando ) {
+            if (mouseButton == RIGHT) {
+                menuI = 0
+                gameover = false;
+                player = new Player(windowWidth / 2, windowHeight - 20);
+                seringa = new Seringa(player.playerX, player.playerY);
+                pontuacao = 0;
+                inimigos = [];
+                jogo = false;
+            }
 
-            seringa.atacaSeringa();
 
         } else {
 
-        // se não está a atacar, a pesonagem pode andar
-            detetaKeys();  
+            DeadCounter = 0;
 
-        //muda a direção da seringa (imagem)
-            seringa.mudaImagemV();
+            for (let inim of inimigos) {
 
-        // a seringa anda sempre com o player
-            seringa.moveSeringa(player.playerX,player.playerY);
-            player.movePlayer();
+                if (inim.morreu == true) {
+                    DeadCounter++;
+
+
+                    if (DeadCounter == nrInimigos) {
+
+                        gameover = true;
+
+                    }
+                }
+
+            }
+
+            textSize(15);
+            text("Pontuacao: " + pontuacao, 200, 100);
+
+            mostraInim();
+            seringa.iniciarSeringa();
+            player.iniciarPlayer();
+
+
+            // caso atacar seja verdade, chama a função para atacar
+            if (atacando) {
+
+                seringa.atacaSeringa();
+
+            } else {
+
+                // se não está a atacar, a pesonagem pode andar
+                detetaKeys();
+
+                //muda a direção da seringa (imagem)
+                seringa.mudaImagemV();
+
+                // a seringa anda sempre com o player
+                seringa.moveSeringa(player.playerX, player.playerY);
+                player.movePlayer();
+            }
+
+
         }
+
 
 
 
@@ -121,15 +172,15 @@ function initInimigos() {
 }
 
 function colide(x1, y1, w1, h1, x2, y2, w2, h2) {
-  
+
     // test for collision
-    if (x1+w1/2 >= x2-w2/2 && x1-w1/2 <= x2+w2/2 && y1+h1/2 >= y2-h2/2 && y1-h1/2 <= y2+h2/2) {
-      return true;    // if a hit, return true
+    if (x1 + w1 / 2 >= x2 - w2 / 2 && x1 - w1 / 2 <= x2 + w2 / 2 && y1 + h1 / 2 >= y2 - h2 / 2 && y1 - h1 / 2 <= y2 + h2 / 2) {
+        return true;    // if a hit, return true
     }
     else {            // if not, return false
-      return false;
+        return false;
     }
-  }
+}
 
 // -- Quando clicado e largado 
 function mouseClicked() {
@@ -207,38 +258,38 @@ function keyPressed() {
 
 
 
-    if(!atacando){
+    if (!atacando) {
 
 
 
-        if (key == "f") {  
-            if (!atacando ) {
+        if (key == "f") {
+            if (!atacando) {
                 atacando = true;
                 seringa.distPercorrida = 0;  // Reseta a distância percorrida
             }
         }
-    
-        if(key == "q"){
+
+        if (key == "q") {
 
             seringa.mudaImagem(1);
-           // fazer mudar 
-    
+            // fazer mudar 
+
         }
 
-        if(key == "e"){
+        if (key == "e") {
 
             seringa.mudaImagem(2);
-            
-    
+
+
         }
 
-        if(key == "r"){
+        if (key == "r") {
 
             seringa.mudaImagem(3);
-            
-    
+
+
         }
-    
+
         if (key == "w") {
             estado_keyUp = true;
         }
@@ -258,37 +309,37 @@ function keyPressed() {
 
 
         }
-    
+
         switch (keyCode) {
-    
+
             case UP_ARROW:
                 estado_keyUp = true;
 
                 break;
-    
+
             case DOWN_ARROW:
                 estado_keyDown = true;
 
                 break;
-    
+
             case LEFT_ARROW:
                 estado_keyLeft = true;
                 dir = false;
 
                 break;
-    
+
             case RIGHT_ARROW:
                 estado_keyRight = true;
                 dir = true;
 
                 break;
-    
-    
+
+
         }
 
     }
 
-    
+
 
 }
 
@@ -344,7 +395,7 @@ function menuComoJogar() {
 
 }
 
-function carregaMedia(){
+function carregaMedia() {
 }
 
 function mostraInim() {
@@ -357,7 +408,7 @@ function mostraInim() {
 
             inimigoT = inimigos[j];
         }
-    } 
+    }
 
 
 

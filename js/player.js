@@ -5,7 +5,7 @@ class Player {
         this.playerX = px;
         this.playerY = py;
 
-        this.vel = 1;
+        this.vel = 1.5;
 
         this.diamX = 92;
         this.diamY = 104;

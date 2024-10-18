@@ -76,9 +76,13 @@ class Seringa {
 
                         if(!inim.morreu){
 
+                            
+                            this.pontuacaoDoença(inim.intervalo);
                             console.log("TOCU DIRE");
                             inim.nivelDoente = 0;
                             inim.inimigo = inim.inimigoGeral;
+                            inim.mudarDoenca();
+                            
 
                         }
 
@@ -87,18 +91,25 @@ class Seringa {
                     else if(inim.tipoDoenca == "G" && this.nr == 2){
 
                         if(!inim.morreu){
+                            this.pontuacaoDoença(inim.intervalo);
+
                         console.log("TOCU DIRE VERDE");
                         inim.nivelDoente = 0;
                         inim.inimigo = inim.inimigoGeral;
+                        inim.mudarDoenca();
+
                         }
                     }
 
                     else if(inim.tipoDoenca == "P" && this.nr == 3){
 
                         if(!inim.morreu){
+                            this.pontuacaoDoença(inim.intervalo);
                         console.log("TOCU DIRE ROXOOO");
                         inim.nivelDoente = 0;
                         inim.inimigo = inim.inimigoGeral;
+                        inim.mudarDoenca();
+
                         }
                     }
     
@@ -199,6 +210,13 @@ class Seringa {
             }
         }
 
+
+    }
+
+    pontuacaoDoença(intervalo){
+
+        
+        pontuacao += (Math.round(intervalo)/10);
 
     }
 

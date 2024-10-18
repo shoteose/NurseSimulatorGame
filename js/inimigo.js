@@ -133,9 +133,24 @@ class Inimigo{
 
     }
 
-    mudarDoenca(nova){
+    mudarDoenca(){
 
-        this.tipoDoenca = nova;
+        this.nrRandom = random(0,3);
+
+        if(this.nrRandom<1){
+            this.tipoDoenca = "R";
+        }
+
+        if(this.nrRandom < 2 && this.nrRandom >1){
+            this.tipoDoenca = "G";
+
+        }
+
+        if(this.nrRandom < 3 && this.nrRandom >2){
+            this.tipoDoenca = "P";
+
+        }
+
         this.inimigo2 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "2.png");
         this.inimigo3 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "3.png");
         this.inimigo4 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "4.png");
