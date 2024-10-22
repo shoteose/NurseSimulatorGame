@@ -85,17 +85,7 @@ function draw() {
 
         if (gameover) {
 
-            text("GAME OVER", 500, 500);
-
-            if (mouseButton == RIGHT) {
-                menuI = 0
-                gameover = false;
-                player = new Player(windowWidth / 2, windowHeight - 20);
-                seringa = new Seringa(player.playerX, player.playerY);
-                pontuacao = 0;
-                inimigos = [];
-                jogo = false;
-            }
+            telaGameover();
 
 
         } else {
@@ -116,7 +106,7 @@ function draw() {
             }
 
             textSize(30);
-            text("Pontuacao: " + pontuacao.toFixed(0), 200, 100);
+            text("Pontuacao: " + pontuacao.toFixed(0), 300, 100);
 
             mostraInim();
             seringa.iniciarSeringa();
@@ -449,6 +439,22 @@ function removeInimigo(obj) {
     if (index > -1) {
         inimigos.splice(index, 1);
     }
+}
+
+function telaGameover(){
+
+    text("GAME OVER", windowWidth/2, 250);
+
+    if (mouseButton == RIGHT) {
+        menuI = 0
+        gameover = false;
+        player = new Player(windowWidth / 2, windowHeight - 20);
+        seringa = new Seringa(player.playerX, player.playerY);
+        pontuacao = 0;
+        inimigos = [];
+        jogo = false;
+    }
+
 }
 
 function touchStarted() {

@@ -36,7 +36,7 @@ class Seringa {
         this.seringa2V = loadImage("assets/img/Seringas/seringa2V.png");
         this.seringa3V = loadImage("assets/img/Seringas/seringa3V.png");
         this.seringa = this.seringa1;
-        this.somBateuSeringa = createAudio("assets/sound/arcade-heal.mp3");
+        this.somBateuSeringa = createAudio("assets/sound/arcade-heal_corte.mp3");
     }
 
     // Função para mudar a imagem da seringa
