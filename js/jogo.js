@@ -24,7 +24,8 @@ let pontuacao = 0;
 // Para asaber a direção para qual está virado ( Esquerda = false // direita = true)
 let dir = true;
 
-
+let musica;
+let somClick;
 //Para saber quando está a atacar ou não
 let atacando = false;
 
@@ -38,8 +39,6 @@ function preload() {
     carregaMedia();
     player = new Player(windowWidth / 2, windowHeight - 20);
     seringa = new Seringa(player.playerX, player.playerY);
-
-    
 
 }
 
@@ -56,6 +55,8 @@ function setup() {
 }
 
 function draw() {
+
+    initMusica();
 
     if (menuI == 0) {
 
@@ -74,12 +75,9 @@ function draw() {
 
     }
 
-
-
     if (jogo) {
 
         noCursor();
-
 
         // image(this.back, 0, 0);
         back.resize(windowWidth - 20, windowHeight - 20);
@@ -109,14 +107,12 @@ function draw() {
                 if (inim.morreu == true) {
                     DeadCounter++;
 
-
                     if (DeadCounter == nrInimigos) {
 
                         gameover = true;
 
                     }
                 }
-
             }
 
             textSize(30);
@@ -187,21 +183,22 @@ function mouseClicked() {
 
     if (menuI == 0) {
 
-        // Verifica o primeiro retângulo ("Jogar")
+        // Verifica o Jogar
         if (mouseX > windowWidth / 2 - 150 && mouseX < windowWidth / 2 + 150) {
             if (mouseY > windowHeight / 2 - 215 && mouseY < windowHeight / 2 - 115) {
                 menuI = 1;
-
+                somClick.play();
                 jogo = true;
                 initInimigos();
 
             }
         }
 
-        // Verifica o segundo retângulo ("Como Jogar")
+        // Verifica o Como Jogar
         if (mouseX > windowWidth / 2 - 150 && mouseX < windowWidth / 2 + 150) {
             if (mouseY > windowHeight / 2 - 65 && mouseY < windowHeight / 2 + 35) {
                 menuI = 2; // Como Jogar
+                somClick.play();
                 console.log("tou a ver 2");
             }
         }
@@ -270,6 +267,13 @@ function keyPressed() {
 
 
     if (!atacando) {
+
+        if(key =="f"){
+
+            atacando = true;
+            seringa.distPercorrida = 0;  // Reseta a distância percorrida
+
+        }
 
         if (key == "q") {
 
@@ -391,11 +395,13 @@ function menuComoJogar() {
     text('Right Click para voltares para o Menu', windowWidth / 2, 100);
     textSize(20);
     text('1. O objetivo do jogo é curares os utentes.', windowWidth / 2, 200);
-    text('2. Cada utente mostra a sua doença com cor correspondente e seringa que cura:', windowWidth / 2, 250);
-    text('3. Move a tua personagem usando as setinhas ou o WASD', windowWidth / 2, windowHeight / 2 + 200);
+    text('2. Cada utente mostra a sua doença com cor correspondente e seringa que cura', windowWidth / 2, 250);
+    text('3. Consegues atacar fazendo barulho.', windowWidth / 2, windowHeight / 2 + 200);
+    text('4. Move a tua personagem usando as setinhas ou o WASD', windowWidth / 2, windowHeight / 2 + 250);
 
 
     if (mouseButton == RIGHT) {
+        somClick.play();
         menuI = 0;
     }
 
@@ -407,7 +413,18 @@ function carregaMedia() {
     back = loadImage("assets/img/backgroundTeste.png");
     imagemInfoSeringa = loadImage("assets/img/HUI/escolherSeringasInfo.png");
     imagemBotao = loadImage("assets/img/HUI/botao.png");
+    musica = createAudio("assets/sound/A_Bit_Of_Hope_David_Fesliyan.mp3");
+    somClick = createAudio("assets/sound/retro-click.mp3");
+    
 
+}
+
+function initMusica(){
+
+    musica.volume(0.4);
+    musica.autoplay();
+    musica.loop();
+    
 }
 
 function mostraInim() {

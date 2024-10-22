@@ -36,6 +36,7 @@ class Seringa {
         this.seringa2V = loadImage("assets/img/Seringas/seringa2V.png");
         this.seringa3V = loadImage("assets/img/Seringas/seringa3V.png");
         this.seringa = this.seringa1;
+        this.somBateuSeringa = createAudio("assets/sound/arcade-heal.mp3");
     }
 
     // Função para mudar a imagem da seringa
@@ -71,6 +72,9 @@ class Seringa {
 
                 if (this.rectRect(this.seringaX, this.seringaY, this.diamX, this.diamY, inim.inimigoX, inim.inimigoY, inim.diamX, inim.diamY)) {
 
+                    
+                    
+
                     if(inim.tipoDoenca == "R" && this.nr == 1){
 
 
@@ -80,10 +84,11 @@ class Seringa {
                             this.pontuacaoDoença(inim.intervalo);
                         
                             console.log("TOCU DIRE");
+                            this.criaAudio();
                             inim.nivelDoente = 0;
                             inim.inimigo = inim.inimigoGeral;
                             inim.mudarDoenca();
-                            
+                                                   
 
                         }
 
@@ -95,9 +100,11 @@ class Seringa {
                             this.pontuacaoDoença(inim.intervalo);
 
                         console.log("TOCU DIRE VERDE");
+                        this.criaAudio();
                         inim.nivelDoente = 0;
                         inim.inimigo = inim.inimigoGeral;
                         inim.mudarDoenca();
+                     
 
                         }
                     }
@@ -106,10 +113,12 @@ class Seringa {
 
                         if(!inim.morreu){
                             this.pontuacaoDoença(inim.intervalo);
+                            this.criaAudio();
                         console.log("TOCU DIRE ROXOOO");
                         inim.nivelDoente = 0;
                         inim.inimigo = inim.inimigoGeral;
                         inim.mudarDoenca();
+                         
 
                         }
                     }
@@ -162,6 +171,13 @@ class Seringa {
         this.seringaY = y + this.offsetY;
     }
 
+
+    criaAudio(){
+
+        this.somBateuSeringa.volume(0.75);
+        this.somBateuSeringa.play();
+        
+    }
 
     mudaImagemV() {
 

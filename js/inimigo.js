@@ -41,6 +41,7 @@ class Inimigo{
         this.inimigo2 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "2.png");
         this.inimigo3 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "3.png");
         this.inimigo4 = loadImage("assets/img/Inimigos/inimigo" + this.tipoDoenca + "4.png");
+        this.somMorreu = createAudio("assets/sound/male-death-sound.mp3");
 
         this.inimigo = this.inimigoGeral;
     }
@@ -82,8 +83,12 @@ class Inimigo{
                 case 2:
                     this.inimigo = this.inimigo4;
                    
-                    this.morreu=true;
-
+                    if (!this.morreu) {
+                        this.somMorreu.play();
+                        this.morreu = true;
+                    }
+                    
+                    
                     this.vel=0;
                     this.dir=0;
                     this.inimigoVelX = 0;
