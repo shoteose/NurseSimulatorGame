@@ -78,6 +78,7 @@ class Seringa {
 
                             
                             this.pontuacaoDoença(inim.intervalo);
+                        
                             console.log("TOCU DIRE");
                             inim.nivelDoente = 0;
                             inim.inimigo = inim.inimigoGeral;

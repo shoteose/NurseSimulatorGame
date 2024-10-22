@@ -30,6 +30,7 @@ let atacando = false;
 
 let gameover = false;
 
+let input;
 
 // preload ao player e á seringa
 function preload() {
@@ -38,9 +39,7 @@ function preload() {
     player = new Player(windowWidth / 2, windowHeight - 20);
     seringa = new Seringa(player.playerX, player.playerY);
 
-    back = loadImage("assets/img/backgroundTeste.png");
-
-
+    
 
 }
 
@@ -49,10 +48,10 @@ function setup() {
     createCanvas(windowWidth - 20, windowHeight - 20);
     frameRate(60);
     smooth();
+    textFont(fonteTexto);
 
-
-
-
+    input = new p5.AudioIn();
+    input.start();
 
 }
 
@@ -120,13 +119,25 @@ function draw() {
 
             }
 
-            textSize(15);
-            text("Pontuacao: " + pontuacao, 200, 100);
+            textSize(30);
+            text("Pontuacao: " + pontuacao.toFixed(0), 200, 100);
 
             mostraInim();
             seringa.iniciarSeringa();
             player.iniciarPlayer();
 
+
+            let volume = input.getLevel() * 3;
+            let threshold = 0.1;
+
+
+            if (volume > threshold) {
+
+                if (!atacando) {
+                    atacando = true;
+                    seringa.distPercorrida = 0;  // Reseta a distância percorrida
+                }
+            }
 
             // caso atacar seja verdade, chama a função para atacar
             if (atacando) {
@@ -145,20 +156,9 @@ function draw() {
                 seringa.moveSeringa(player.playerX, player.playerY);
                 player.movePlayer();
             }
-
-
         }
 
-
-
-
-
-
-
-
     }
-
-
 }
 
 function initInimigos() {
@@ -210,24 +210,35 @@ function mouseClicked() {
 
 function menuInicial() {
 
-    background(175);
+    
 
+    back.resize(windowWidth - 20, windowHeight - 20);
+    image(this.back, 0, 0);
+    textSize(50);
+    text("Nurse Simulator Game", windowWidth/2, 75);
+    
 
     //primeiro "botao" jogar
-    fill(0, 255, 0);
-    rect(windowWidth / 2 - 150, windowHeight / 2 - 215, 300, 100);
+    //fill(0, 255, 0);
+    //rect(windowWidth / 2 - 150, windowHeight / 2 - 215, 300, 100);
+    imagemBotao.resize(320,100);
+    image(imagemBotao, windowWidth / 2 - 160, windowHeight / 2 - 215);
 
     //segundo "botao" como jogar
-    fill(255, 0, 255);
-    rect(windowWidth / 2 - 150, windowHeight / 2 - 65, 300, 100);
+    //fill(255, 0, 255);
+    //rect(windowWidth / 2 - 150, windowHeight / 2 - 65, 300, 100);
+    image(imagemBotao, windowWidth / 2 - 160, windowHeight / 2 - 65);
 
-
-    textSize(40);
+    textSize(35);
     textAlign(CENTER);
 
     fill(255);
     text('Jogar', windowWidth / 2, windowHeight / 2 - 150);
     text('Como Jogar', windowWidth / 2, windowHeight / 2);
+
+    textSize(25);
+    text("João Paulo Martins Novo", windowWidth -300, windowHeight - 100);
+    text("nº 25968 ECGM - SM ", windowWidth -300, windowHeight - 70);
 
 
 }
@@ -259,15 +270,6 @@ function keyPressed() {
 
 
     if (!atacando) {
-
-
-
-        if (key == "f") {
-            if (!atacando) {
-                atacando = true;
-                seringa.distPercorrida = 0;  // Reseta a distância percorrida
-            }
-        }
 
         if (key == "q") {
 
@@ -381,21 +383,31 @@ function keyReleased() {
 
 function menuComoJogar() {
 
-    background(255, 0, 255)
-    textSize(20)
-    text('Right Click para voltares para o Menu', windowWidth / 2, 100)
-    textSize(30)
-    text('blablabla', windowWidth / 2, windowHeight / 2)
-    text('2. Move a tua personagem usando as setinhas ou o WASD', windowWidth / 2, windowHeight / 2 + 100)
-    text('blablabla', windowWidth / 2, windowHeight / 2 + 150)
-    text('balaval', windowWidth / 2, windowHeight / 2 + 200)
+    back.resize(windowWidth - 20, windowHeight - 20);
+    image(this.back, 0, 0);
+    imagemInfoSeringa.resize(500,0);
+    image(imagemInfoSeringa,(windowWidth / 2 ) - 250 ,275);
+    textSize(20);
+    text('Right Click para voltares para o Menu', windowWidth / 2, 100);
+    textSize(20);
+    text('1. O objetivo do jogo é curares os utentes.', windowWidth / 2, 200);
+    text('2. Cada utente mostra a sua doença com cor correspondente e seringa que cura:', windowWidth / 2, 250);
+    text('3. Move a tua personagem usando as setinhas ou o WASD', windowWidth / 2, windowHeight / 2 + 200);
+
+
     if (mouseButton == RIGHT) {
-        menuI = 0
+        menuI = 0;
     }
 
 }
 
 function carregaMedia() {
+
+    fonteTexto = loadFont("assets/font/joystix_monospace.otf");
+    back = loadImage("assets/img/backgroundTeste.png");
+    imagemInfoSeringa = loadImage("assets/img/HUI/escolherSeringasInfo.png");
+    imagemBotao = loadImage("assets/img/HUI/botao.png");
+
 }
 
 function mostraInim() {
@@ -419,5 +431,11 @@ function removeInimigo(obj) {
 
     if (index > -1) {
         inimigos.splice(index, 1);
+    }
+}
+
+function touchStarted() {
+    if (getAudioContext().state !== 'running') {
+        getAudioContext().resume();
     }
 }
