@@ -10,19 +10,16 @@ class Player {
         this.diamX = 92;
         this.diamY = 104;
 
-
-
-
         this.playerImg = loadImage("assets/img/Player/player.png");
         this.playerImgT = loadImage("assets/img/Player/playerT.png");
         this.playerImgL = loadImage("assets/img/Player/playerL.png");
         this.playerImgR = loadImage("assets/img/Player/playerR.png");
 
         this.player = this.playerImg;
-
     }
 
     movePlayer() {
+
         if (atacando) {
             // não te mexas desgraçado
             return;
@@ -55,10 +52,6 @@ class Player {
 
        // this.refleteInimigos();
     }
-
-
-
-
 
     rectRect(x1, y1, w1, h1, x2, y2, w2, h2) {
 

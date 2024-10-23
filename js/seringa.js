@@ -76,7 +76,7 @@ class Seringa {
 
                         if (!inim.morreu) {
 
-                            this.pontuacaoDoença(inim.intervalo);
+                            this.pontuacaoDoenca(inim.intervalo);
 
                             console.log("TOCU DIRE");
                             this.criaAudio();
@@ -92,7 +92,7 @@ class Seringa {
                     else if (inim.tipoDoenca == "G" && this.nr == 2) {
 
                         if (!inim.morreu) {
-                            this.pontuacaoDoença(inim.intervalo);
+                            this.pontuacaoDoenca(inim.intervalo);
 
                             console.log("TOCU DIRE VERDE");
                             this.criaAudio();
@@ -107,7 +107,7 @@ class Seringa {
                     else if (inim.tipoDoenca == "P" && this.nr == 3) {
 
                         if (!inim.morreu) {
-                            this.pontuacaoDoença(inim.intervalo);
+                            this.pontuacaoDoenca(inim.intervalo);
                             this.criaAudio();
                             console.log("TOCU DIRE ROXOOO");
                             inim.nivelDoente = 0;
@@ -225,7 +225,7 @@ class Seringa {
 
     }
 
-    pontuacaoDoença(intervalo) {
+    pontuacaoDoenca(intervalo) {
 
 
         pontuacao += (Math.round(intervalo) / 10);
