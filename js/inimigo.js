@@ -144,15 +144,18 @@ class Inimigo{
 
         if(this.nrRandom<1){
             this.tipoDoenca = "R";
+            this.intervalo=random(5000,10000);
         }
 
         if(this.nrRandom < 2 && this.nrRandom >1){
             this.tipoDoenca = "G";
+            this.intervalo=random(5000,10000);
 
         }
 
         if(this.nrRandom < 3 && this.nrRandom >2){
             this.tipoDoenca = "P";
+            this.intervalo=random(5000,10000);
 
         }
 
