@@ -106,7 +106,8 @@ function draw() {
             }
 
             textSize(30);
-            text("Pontuacao: " + pontuacao.toFixed(0), 300, 100);
+            fill(0);
+            text("Pontuacao: " + pontuacao.toFixed(0), windowWidth /2, 100);
 
             mostraInim();
             seringa.iniciarSeringa();
@@ -174,8 +175,8 @@ function mouseClicked() {
     if (menuI == 0) {
 
         // Verifica o Jogar
-        if (mouseX > windowWidth / 2 - 150 && mouseX < windowWidth / 2 + 150) {
-            if (mouseY > windowHeight / 2 - 215 && mouseY < windowHeight / 2 - 115) {
+        if (mouseX > windowWidth / 2 - 160 && mouseX < windowWidth / 2 + 160) {
+            if (mouseY > windowHeight / 2 - 115  && mouseY < windowHeight / 2 - 15) {
                 menuI = 1;
                 somClick.play();
                 jogo = true;
@@ -185,8 +186,8 @@ function mouseClicked() {
         }
 
         // Verifica o Como Jogar
-        if (mouseX > windowWidth / 2 - 150 && mouseX < windowWidth / 2 + 150) {
-            if (mouseY > windowHeight / 2 - 65 && mouseY < windowHeight / 2 + 35) {
+        if (mouseX > windowWidth / 2 - 160 && mouseX < windowWidth / 2 + 160) {
+            if (mouseY > windowHeight / 2 + 35 && mouseY < windowHeight / 2 + 135) {
                 menuI = 2; // Como Jogar
                 somClick.play();
                 console.log("tou a ver 2");
@@ -201,27 +202,27 @@ function menuInicial() {
 
     back.resize(windowWidth - 20, windowHeight - 20);
     image(this.back, 0, 0);
-    textSize(50);
-    text("Nurse Simulator Game", windowWidth/2, 75);
+    textSize(70);
+    text("Nurse Simulator Game", windowWidth/2, 225);
     
 
     //primeiro "botao" jogar
     //fill(0, 255, 0);
     //rect(windowWidth / 2 - 150, windowHeight / 2 - 215, 300, 100);
     imagemBotao.resize(320,100);
-    image(imagemBotao, windowWidth / 2 - 160, windowHeight / 2 - 215);
+    image(imagemBotao, windowWidth / 2 - 160, windowHeight / 2 - 115);
 
     //segundo "botao" como jogar
     //fill(255, 0, 255);
     //rect(windowWidth / 2 - 150, windowHeight / 2 - 65, 300, 100);
-    image(imagemBotao, windowWidth / 2 - 160, windowHeight / 2 - 65);
+    image(imagemBotao, windowWidth / 2 - 160, windowHeight / 2 + 35);
 
     textSize(35);
     textAlign(CENTER);
 
     fill(255);
-    text('Jogar', windowWidth / 2, windowHeight / 2 - 150);
-    text('Como Jogar', windowWidth / 2, windowHeight / 2);
+    text('Jogar', windowWidth / 2, windowHeight / 2 - 50);
+    text('Como Jogar', windowWidth / 2, windowHeight / 2 +100);
 
     textSize(25);
     text("João Paulo Martins Novo", windowWidth -300, windowHeight - 100);
@@ -400,7 +401,7 @@ function menuComoJogar() {
 function carregaMedia() {
 
     fonteTexto = loadFont("assets/font/joystix_monospace.otf");
-    back = loadImage("assets/img/backgroundTeste.png");
+    back = loadImage("assets/img/backgroundTesteFinal.png");
     imagemInfoSeringa = loadImage("assets/img/HUI/escolherSeringasInfo.png");
     imagemBotao = loadImage("assets/img/HUI/botao.png");
     musica = createAudio("assets/sound/A_Bit_Of_Hope_David_Fesliyan.mp3");
@@ -443,7 +444,11 @@ function removeInimigo(obj) {
 
 function telaGameover(){
 
+    textSize(40);
     text("GAME OVER", windowWidth/2, 250);
+    textSize(30);
+    text("Tiveste uma pontuação de " + pontuacao + " !", windowWidth/2, 350);
+    text("Faz Right Click para voltar para o menu Principal.", windowWidth/2, 400);
 
     if (mouseButton == RIGHT) {
         menuI = 0
