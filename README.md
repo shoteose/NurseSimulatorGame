@@ -1,4 +1,4 @@
-<h1 align="center" id="title">Picaria</h1>
+<h1 align="center" id="title">Nurse Simulator Game</h1>
 
 <p align="center"><img src="https://socialify.git.ci/shoteose/NurseSimulatorGame/image?language=1&name=1&owner=1&pattern=Plus&theme=Light" alt="NurseSimulatorGame" width="640" height="320" /></p>
 
