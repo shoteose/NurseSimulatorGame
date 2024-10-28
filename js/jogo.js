@@ -57,6 +57,7 @@ function setup() {
 function draw() {
 
     initMusica();
+    resizeCanvas(windowWidth -20, windowHeight-20);
 
     if (menuI == 0) {
 
