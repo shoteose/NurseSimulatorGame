@@ -371,13 +371,13 @@ function menuComoJogar() {
     back.resize(windowWidth - 20, windowHeight - 20);
     image(this.back, 0, 0);
     imagemInfoSeringa.resize(500,0);
-    image(imagemInfoSeringa,(windowWidth / 2 ) - 250 ,275);
+    image(imagemInfoSeringa,(windowWidth / 2 ) - 250 ,265);
 
     
     textSize(20);
     fill(255);
-    text('1. O objetivo do jogo é curares os utentes.', windowWidth / 2, 200);
-    text('2. Cada utente mostra a sua doença com cor correspondente e seringa que cura', windowWidth / 2, 250);
+    text('1. O objetivo do jogo é curares os utentes.', windowWidth / 2, 175);
+    text('2. Cada utente mostra a sua doença com cor correspondente e seringa que cura', windowWidth / 2, 225);
     text('3. Consegues atacar fazendo barulho.', windowWidth / 2, windowHeight / 2 + 200);
     text('4. Move a tua personagem usando as setinhas ou o WASD', windowWidth / 2, windowHeight / 2 + 250);
     //fill(0,255,0);
